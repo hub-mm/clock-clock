@@ -17,7 +17,7 @@ function setDate() {
     const hoursDegrees = ((hours / 12) * 360) + 180;
     hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
 
-    if (secondsDegrees === 0|| minutesDegrees === 0|| hoursDegrees ===0) {
+    if (secondsDegrees == 180|| minutesDegrees == 180|| hoursDegrees == 180) {
         secondHand.style.transition = "none";
         minuteHand.style.transition = "none";
         hourHand.style.transition = "none";
