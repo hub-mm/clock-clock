@@ -25,6 +25,7 @@ h1 {
     margin-bottom: 24px;
     letter-spacing: 2px;
     font-weight: 600;
+    visibility: visible;
 }
 
 .clock {

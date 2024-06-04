@@ -46,11 +46,18 @@ function setDate() {
         hourHand.style.transition = "";
     }
 
-    const time = hours + ' : ' + minutes + ' : ' + secondsString;
-    if (setDate) {
-        timeDisplay.textContent = `local time: ${time}`
-    }
+    const time = hoursString + ' : ' + minutesString + ' : ' + secondsString;
 
+    timeDisplay.textContent = `local time: ${time}`;
 }
-
 setInterval(setDate, 1000);
+
+function blinkTime() {
+    let timeVisibility = document.querySelector('.time');
+    if (timeVisibility.style.visibility == 'hidden') {
+        timeDisplay.style.visibility = 'visible';
+    } else {
+        timeDisplay.style.visibility = 'hidden';
+    }
+}
+setInterval(blinkTime, 1000);
