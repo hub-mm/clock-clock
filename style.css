@@ -16,8 +16,15 @@ h1 {
 .container {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center; 
+}
+
+.time {
+    margin-bottom: 24px;
+    letter-spacing: 2px;
+    font-weight: 600;
 }
 
 .clock {
