@@ -34,16 +34,19 @@ let mode = 'local';
 local.addEventListener('click', () => {
     mode = 'local';
     setTime(mode);
+    setDate(mode);
 });
 
 minus.addEventListener('click', () => {
     mode = 'minus';
     setTime(mode);
+    setDate(mode);
 });
 
 plus.addEventListener('click', () => {
     mode = 'plus';
     setTime(mode);
+    setDate(mode);
 })
 
 blinkSwitch.addEventListener('click', () => {
@@ -128,14 +131,20 @@ function setTime(mode) {
 function setDate(mode) {
     const dateTime = new Date();
     let day = dateTime.getDate();
-    const hours = dateTime.getHours();
+    let hours = dateTime.getHours();
+    const hoursString = hours < 10 ? `0${hours}` : hours;
 
-    // mode = 'plus';
-    // if (mode === 'plus') {
-    //     if (hours >= 0 && minutes >= 1) {
-    //         day += 1
-    //     }
-    // }
+    if (mode === 'plus') {
+        hours += 5;
+        if (hours >= 24) {
+            day += 1;
+        }
+    } else if (mode === 'minus') {
+        hours -= 5;
+        if (hours <= 24) {
+            day -= 1;
+        }
+    }
 
     const month = dateTime.getMonth() + 1;
     const year = dateTime.getFullYear();
@@ -149,21 +158,21 @@ function setDate(mode) {
 
 
 function blink(btn) {
-if (btn === 'on') {
-    if (date.style.visibility === 'hidden') {
-    date.style.visibility = 'visible';
-    time.style.visibility = 'visible';
-} else {
-    date.style.visibility = 'hidden';
-    time.style.visibility = 'hidden';
-}
-} else {
-    date.style.visibility = 'visible';
-    time.style.visibility = 'visible';
-}
+    if (btn === 'on') {
+        if (date.style.visibility === 'hidden') {
+            date.style.visibility = 'visible';
+            time.style.visibility = 'visible';
+        } else {
+            date.style.visibility = 'hidden';
+            time.style.visibility = 'hidden';
+        }
+    } else {
+        date.style.visibility = 'visible';
+        time.style.visibility = 'visible';
+    }
 }
 
 
 setInterval(() => setTime(mode), interval);
-setInterval(setDate, interval);
+setInterval(() => setDate(mode), interval);
 setInterval(() => blink(btn), blinkInterval);
