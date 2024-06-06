@@ -5,24 +5,33 @@
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <link rel='stylesheet' href='./style.css'>
-    <title>Past Time</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet">
+
+    <title>time</title>
 </head>
 
 <body>
-    <h1>passing time . . .</h1>
+    <nav class="nav">
+        <h1 class="title"></h1>
 
-    <ul class="time-change">
-        <div class='button-time-change'><button id='local'>local</button></div>
-        <div class='button-time-change'><button id='minus-six'>minus six</button></div>
-    </ul>
+        <div class="time-change">
+            <div class='button-time-change'><button id='minus'>minus five</button></div>
+            <div class='button-time-change'><button id='local'>local</button></div>
+            <div class='button-time-change'><button id='plus'>plus five</button></div>
+            <button id='blink'>blink on/off</button>
+        </div>
+    </nav>
 
     <div class='container'>
         <div class='time'></div>
         <div class='date'></div>
         <div class='clock'>
             <div class='clock-face'>
-                <div class='hand minute-hand'></div>
                 <div class='hand hour-hand'></div>
+                <div class='hand minute-hand'></div>
                 <div class='hand second-hand'></div>
             </div>
         </div>

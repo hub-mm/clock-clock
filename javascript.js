@@ -1,7 +1,7 @@
-
 const timeChangeButton = document.querySelectorAll('.button-time-change button');
-const localButton = document.querySelector('#local');
-const minusSixButton = document.querySelector('#minus-six');
+const local = document.querySelector('#local');
+const minus = document.querySelector('#minus');
+const plus = document.querySelector('#plus');
 
 const secondHand = document.querySelector('.second-hand');
 const minuteHand = document.querySelector('.minute-hand');
@@ -9,16 +9,51 @@ const hourHand = document.querySelector('.hour-hand');
 const time = document.querySelector('.time');
 const date = document.querySelector('.date');
 
+const blinkSwitch = document.querySelector('#blink');
+
+let btn = 'off';
+let blinkInterval = 800;
+let interval = 1000;
+
+const title = 'past time . . .';
+const typeWriteTime = 500;
+let num = 0;
+
+function typeWrite() {
+    if (num < title.length) {
+        document.querySelector('.title').innerHTML += title.charAt(num);
+        num++;
+        setTimeout(typeWrite, typeWriteTime);
+        return (!typeWrite);
+    }
+}
+setInterval(typeWrite(), typeWriteTime);
+
 let mode = 'local';
 
-localButton.addEventListener('click', () => {
+local.addEventListener('click', () => {
     mode = 'local';
-    setTime(mode)
+    setTime(mode);
 });
 
-minusSixButton.addEventListener('click', () => {
-    mode = 'minusSix';
+minus.addEventListener('click', () => {
+    mode = 'minus';
     setTime(mode);
+});
+
+plus.addEventListener('click', () => {
+    mode = 'plus';
+    setTime(mode);
+})
+
+blinkSwitch.addEventListener('click', () => {
+    if (btn === 'on') {
+        btn = 'off';
+        blink(btn);
+    } else {
+        btn = 'on';
+        blink(btn);
+    }
 });
 
 function setTime(mode) {
@@ -27,17 +62,38 @@ function setTime(mode) {
 
     if (mode === 'local') {
         hours;
-    } else if (mode === 'minusSix') {
-        hours -= 6;
+        local.style.backgroundColor = 'white';
+        local.style.color = 'black';
+        minus.style.backgroundColor = 'black';
+        minus.style.color = 'white';
+        plus.style.backgroundColor = 'black';
+        plus.style.color = 'white';
+    } else if (mode === 'minus') {
+        hours -= 5;
         if (hours < 0) hours += 24;
-    }
+        local.style.backgroundColor = 'black';
+        local.style.color = 'white';
+        minus.style.backgroundColor = 'white';
+        minus.style.color = 'black';
+        plus.style.backgroundColor = 'black';
+        plus.style.color = 'white';
+    } else if (mode === 'plus') {
+        hours += 5;
+        if (hours > 24) hours -= 24;
+        local.style.backgroundColor = 'black';
+        local.style.color = 'white';
+        minus.style.backgroundColor = 'black';
+        minus.style.color = 'white';
+        plus.style.backgroundColor = 'white';
+        plus.style.color = 'black';
+    };
 
     const minutes = dateTime.getMinutes();
     const seconds = dateTime.getSeconds();
 
-    const hoursDegrees = ((hours / 12) * 360) + 180;
-    const minutesDegrees = ((minutes / 60) * 360) + 180;
-    const secondsDegrees = ((seconds / 60) * 360) + 180;
+    const hoursDegrees = ((hours / 12) * 360) - 90;
+    const minutesDegrees = ((minutes / 60) * 360) - 90;
+    const secondsDegrees = ((seconds / 60) * 360) - 90;
 
     hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
     minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
@@ -59,11 +115,28 @@ function setTime(mode) {
         minuteHand.style.transition = "";
         hourHand.style.transition = "";
     }
+
+    const clock = document.querySelector('.clock');
+
+    if (hours >= 6 && hours <= 18) {
+        clock.style.boxShadow = '0 0 24px 2px darkorange';
+    } else {
+        clock.style.boxShadow = '0 0 24px 2px whitesmoke';
+    }
 }
 
-function setDate() {
+function setDate(mode) {
     const dateTime = new Date();
-    const day = dateTime.getDate();
+    let day = dateTime.getDate();
+    const hours = dateTime.getHours();
+
+    // mode = 'plus';
+    // if (mode === 'plus') {
+    //     if (hours >= 0 && minutes >= 1) {
+    //         day += 1
+    //     }
+    // }
+
     const month = dateTime.getMonth() + 1;
     const year = dateTime.getFullYear();
 
@@ -74,22 +147,23 @@ function setDate() {
     date.textContent = dateFormat;
 }
 
-function blinkTime() {
+
+function blink(btn) {
+if (btn === 'on') {
     if (date.style.visibility === 'hidden') {
-        date.style.visibility = 'visible';
-        time.style.visibility = 'visible';
-    } else {
-        date.style.visibility = 'hidden';
-        time.style.visibility = 'hidden';
-    }
+    date.style.visibility = 'visible';
+    time.style.visibility = 'visible';
+} else {
+    date.style.visibility = 'hidden';
+    time.style.visibility = 'hidden';
+}
+} else {
+    date.style.visibility = 'visible';
+    time.style.visibility = 'visible';
+}
 }
 
-console.groupCollapsed('function')
-console.log('setTime', setTime);
-console.log('setDate', setDate);
-console.log('blinkTime', blinkTime);
-console.groupEnd();
 
-setInterval(() => setTime(mode), 1000);
-setInterval(setDate, 1000);
-setInterval(blinkTime, 800);
+setInterval(() => setTime(mode), interval);
+setInterval(setDate, interval);
+setInterval(() => blink(btn), blinkInterval);

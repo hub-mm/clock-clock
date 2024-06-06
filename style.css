@@ -4,18 +4,55 @@ body {
     color: white;
     box-sizing: border-box;
     text-align: center;
+    height: 100vh;
+    font-family: 'Tiny5', sans-serif;
+}
+
+.nav {
+    height: 10%;
 }
 
 h1 {
     display: flex;
     justify-content: center;
-    align-content: flex-end;
+    align-content: center;
     margin: 0;
-    letter-spacing: 8px;
+    letter-spacing: 24px;
+}
+
+.time-change {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    gap: 12px;
+}
+
+button {
+    font-family: 'Tiny5', sans-serif;
+    background-color: black;
+    color: white;
+    padding: 2px 12px;
+    text-align: center;
+    border-style: none;
+    border-radius: 3px;
+    box-shadow: 0 0 2px white;
+    letter-spacing: 2px;
+    transition: all .5s;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+    box-shadow: 0 0 10px 2px white;
+}
+
+#blink {
+    margin-left: 24px;
 }
 
 .container {
-    height: 100vh;
+    height: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,7 +61,7 @@ h1 {
 
 .time,
 .date {
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     font-weight: 600;
     padding: 2px 128px;
     visibility: visible;
@@ -44,26 +81,36 @@ h1 {
     align-items: center;
 }
 
-.hand {
-    border: solid 4px white;
-    background-color: white;
+.clock-face {
     position: absolute;
-    transform-origin: 2px 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hand {
+    position: absolute;
+    background-image: linear-gradient(90deg, black 45%, white 65%);
     transform: rotate(180deg);
     transition: all .3s;
+    transform-origin: center;
     transition-timing-function: cubic-bezier(0, 2.31, 1, 0.74);
+
+    color: red;
 }
 
 .hour-hand {
-    height: 120px;
+    height: 14px;
+    width: 240px;
 }
 
 .minute-hand {
-    height: 180px;
+    height: 8px;
+    width: 360px;
 }
 
 .second-hand {
-    height: 190px;
-    border: solid 2px whitesmoke;
-    background-color: whitesmoke;
+    height: 4px;
+    width: 380px;
+    position: absolute;
 }
