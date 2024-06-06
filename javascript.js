@@ -3,6 +3,7 @@ const local = document.querySelector('#local');
 const minus = document.querySelector('#minus');
 const plus = document.querySelector('#plus');
 
+
 const secondHand = document.querySelector('.second-hand');
 const minuteHand = document.querySelector('.minute-hand');
 const hourHand = document.querySelector('.hour-hand');
@@ -10,10 +11,17 @@ const time = document.querySelector('.time');
 const date = document.querySelector('.date');
 
 const blinkSwitch = document.querySelector('#blink');
+const radiusSwitch = document.querySelector('#radius');
 
-let btn = 'off';
+let mode = 'local';
+
 let blinkInterval = 800;
 let interval = 1000;
+
+let btn = 'off';
+let clockFace = document.querySelector('.clock-face');
+
+let shape = 'circle';
 
 const title = 'past time . . .';
 const typeWriteTime = 500;
@@ -24,12 +32,10 @@ function typeWrite() {
         document.querySelector('.title').innerHTML += title.charAt(num);
         num++;
         setTimeout(typeWrite, typeWriteTime);
-        return (!typeWrite);
+        // return (!typeWrite);
     }
 }
 setInterval(typeWrite(), typeWriteTime);
-
-let mode = 'local';
 
 local.addEventListener('click', () => {
     mode = 'local';
@@ -58,6 +64,28 @@ blinkSwitch.addEventListener('click', () => {
         blink(btn);
     }
 });
+
+radiusSwitch.addEventListener('click', () => {
+    if (shape === 'rectangle') {
+        btn = 'circle';
+        radius(shape);
+    } else {
+        btn = 'rectangle';
+        radius(shape);
+    }
+});
+
+function radius(shape) {
+    if (shape === 'circle') {
+        if (clockFace.style.borderRadius === '10px') {
+            clockFace.style.borderRadius = '50%';
+        } else {
+            clockFace.style.borderRadius = '10px';
+        }
+    } else {
+        clockFace.style.borderRadius = '50%';
+    }
+}
 
 function setTime(mode) {
     const dateTime = new Date();
@@ -94,9 +122,9 @@ function setTime(mode) {
     const minutes = dateTime.getMinutes();
     const seconds = dateTime.getSeconds();
 
-    const hoursDegrees = ((hours / 12) * 360) - 90;
-    const minutesDegrees = ((minutes / 60) * 360) - 90;
-    const secondsDegrees = ((seconds / 60) * 360) - 90;
+    const hoursDegrees = ((hours / 12) * 360) + 270;
+    const minutesDegrees = ((minutes / 60) * 360) + 270;
+    const secondsDegrees = ((seconds / 60) * 360) + 270;
 
     hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
     minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
@@ -109,19 +137,19 @@ function setTime(mode) {
     const timeFormat = `${hoursString} : ${minutesString} : ${secondsString}`;
     time.textContent = timeFormat;
 
-    if (secondsDegrees == 180 || minutesDegrees == 180 || hoursDegrees == 180) {
-        secondHand.style.transition = "none";
-        minuteHand.style.transition = "none";
-        hourHand.style.transition = "none";
+    if (secondsDegrees === 270 || minutesDegrees === 270 || hoursDegrees === 270) {
+        secondHand.style.transition = 'none';
+        minuteHand.style.transition = 'none';
+        hourHand.style.transition = 'none';
     } else {
-        secondHand.style.transition = "";
-        minuteHand.style.transition = "";
-        hourHand.style.transition = "";
+        secondHand.style.transition = '';
+        minuteHand.style.transition = '';
+        hourHand.style.transition = '';
     }
 
-    const clock = document.querySelector('.clock');
+    const clock = document.querySelector('.clock-face');
 
-    if (hours >= 6 && hours <= 18) {
+    if (hours > 6 && hours < 18) {
         clock.style.boxShadow = '0 0 24px 2px darkorange';
     } else {
         clock.style.boxShadow = '0 0 24px 2px whitesmoke';
@@ -141,7 +169,7 @@ function setDate(mode) {
         }
     } else if (mode === 'minus') {
         hours -= 5;
-        if (hours <= 24) {
+        if (hours <= 0) {
             day -= 1;
         }
     }
