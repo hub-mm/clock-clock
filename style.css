@@ -164,6 +164,7 @@ opacity: 1;
     flex-direction: column;
     align-content: center;
     justify-content: center;
+    /* flex: 1; */
 
     /* border: solid white; */
 }
@@ -177,7 +178,7 @@ opacity: 1;
 }
 
 .clock-face {
-    flex: 0 0 1;
+    flex: 1 0 1;
     box-shadow: 0 0 24px 2px whitesmoke;
     border-radius: 50%;
     display: flex;
