@@ -188,15 +188,17 @@ function setTime(mode) {
 
     hourHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
     minuteHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
+    secondHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
 
-    if (secondsDegrees === 270) {
+    if (seconds === 0) {
         secondHand.style.transition = 'none';
         minuteHand.style.transition = 'none';
         hourHand.style.transition = 'none';
-    } else {
-        secondHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
-        minuteHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
-        hourHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
+        setTimeout(() => {
+            hourHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
+            minuteHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
+            secondHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
+        }, 20)
     }
 
     const hoursString = hours < 10 ? `0${hours}` : hours;
