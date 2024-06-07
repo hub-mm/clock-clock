@@ -14,11 +14,12 @@ body {
 }
 
 .header {
-    padding: 0 256px;
+    padding: 0;
 
     display: flex;
     flex-grow: 0;
     justify-content: center;
+    flex-wrap: nowrap;
 
     /* border: solid red; */
 }
@@ -72,12 +73,15 @@ button {
     color: white;
     border-radius: 3px;
     box-shadow: 0 0 2px white;
+    opacity: .75;
 
     
     padding: 2px 32px;
     font-family: 'Tiny5', sans-serif;
     text-align: center;
     letter-spacing: 2px;
+
+    cursor: pointer;
 
     transition: all .5s;
 }
@@ -86,6 +90,7 @@ button:hover {
     background-color: white;
     color: black;
     box-shadow: 0 0 10px 2px white;
+    opacity: 1;
 }
 
 .section {
@@ -100,7 +105,7 @@ button:hover {
     /* border: solid red; */
 }
 
-.slider-clock {
+.slider-range {
     width: 0;
 
     display: flex;
@@ -122,6 +127,9 @@ button:hover {
     background: black;
     outline: solid white;
     border-radius: 10px;
+    opacity: .1;
+
+    cursor: pointer;
 
     flex-shrink: 0;
 }
@@ -164,28 +172,39 @@ opacity: 1;
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    /* flex: 1; */
+
+    letter-spacing: 3px;
+    font-weight: 600;
+    font-size: 24px;
+
+    transition: all 0.5s;
 
     /* border: solid white; */
 }
 
 .time,
 .date {
-    letter-spacing: 3px;
-    font-weight: 600;
-    font-size: 24px;
     visibility: visible;
 }
 
+.date {
+    opacity: .75;
+}
+
 .clock-face {
-    flex: 1 0 1;
     box-shadow: 0 0 24px 2px whitesmoke;
     border-radius: 50%;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 400px;
-    width: 400px;
+
+    height: 475px;
+    width: 475px;
+
+    visibility: visible;
+
+    transition: all .75s;
 }
 
 .hand {
@@ -200,15 +219,21 @@ opacity: 1;
 
 .hour-hand {
     height: 14px;
-    width: 240px;
+    width: 315px;
+
+    transition: .5s;
 }
 
 .minute-hand {
     height: 8px;
-    width: 360px;
+    width: 415px;
+
+    transition: .5s;
 }
 
 .second-hand {
     height: 4px;
-    width: 380px;
+    width: 430px;
+
+    transition: .5s;
 }

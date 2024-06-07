@@ -12,6 +12,16 @@ const date = document.querySelector('.date');
 
 const blinkSwitch = document.querySelector('#blink');
 const radiusSwitch = document.querySelector('#radius');
+const clockSwitch = document.querySelector('#clock-switch')
+
+const rangeSlider = document.querySelector('#range-slider');
+const timeDate = document.querySelector('.time-date');
+
+const clock = document.querySelector('.clock-face');
+
+const title = 'past time . . . . . . . . . . . . . . . . . . ';
+const typeWriteTime = 500;
+let num = 0;
 
 let mode = 'local';
 
@@ -20,22 +30,9 @@ let interval = 1000;
 
 let btn = 'off';
 let clockFace = document.querySelector('.clock-face');
-
 let shape = 'circle';
+let clockVisible = 'true';
 
-const title = 'past time . . .';
-const typeWriteTime = 500;
-let num = 0;
-
-function typeWrite() {
-    if (num < title.length) {
-        document.querySelector('.title').innerHTML += title.charAt(num);
-        num++;
-        setTimeout(typeWrite, typeWriteTime);
-        // return (!typeWrite);
-    }
-}
-setInterval(typeWrite(), typeWriteTime);
 
 local.addEventListener('click', () => {
     mode = 'local';
@@ -75,15 +72,56 @@ radiusSwitch.addEventListener('click', () => {
     }
 });
 
-function radius(shape) {
-    if (shape === 'circle') {
-        if (clockFace.style.borderRadius === '10px') {
-            clockFace.style.borderRadius = '50%';
-        } else {
-            clockFace.style.borderRadius = '10px';
-        }
+clockSwitch.addEventListener('click', () => {
+    if (clockVisible === 'true') {
+        clockVisible = 'false';
+        hideClock(clockVisible);
     } else {
-        clockFace.style.borderRadius = '50%';
+        clockVisible = 'true';
+        hideClock(clockVisible);
+    }
+});
+
+rangeSlider.addEventListener('input', function changeSliderValue() {
+    let value = this.value;
+    timeDate.style.fontSize = `${value}px`;
+
+    let clockSize = parseInt(500) - parseInt(value);
+    let hourHandSize = parseInt(340) - (2 * parseInt(value));
+    let minuteHandSize = parseInt(460) - (2 * parseInt(value));
+    let secondHandSize = parseInt(480) - (2 * parseInt(value));
+
+    clock.style.height = `${clockSize}px`;
+    clock.style.width = `${clockSize}px`;
+    hourHand.style.width = `${hourHandSize}px`;
+    minuteHand.style.width = `${minuteHandSize}px`;
+    secondHand.style.width = `${secondHandSize}px`;
+    console.log(`${secondHandSize}px`);
+
+    if (value > 84) {
+        let hourHandSize = parseInt(340) - (2.5 * parseInt(value));
+        let minuteHandSize = parseInt(460) - (3.4 * parseInt(value));
+        let secondHandSize = parseInt(480) - (3.4 * parseInt(value));
+        clock.style.height = `${clockSize}px`;
+        clock.style.width = `${clockSize}px`;
+        hourHand.style.width = `${hourHandSize}px`;
+        minuteHand.style.width = `${minuteHandSize}px`;
+        secondHand.style.width = `${secondHandSize}px`;
+    }
+});
+
+
+function typeWrite() {
+    if (num < title.length) {
+        document.querySelector('.title').innerHTML += title.charAt(num);
+        num++;
+        setTimeout(typeWrite, typeWriteTime);
+    } else {
+        setTimeout(() => {
+            document.querySelector('.title').innerHTML = '';
+            num = 0;
+            typeWrite();
+        }, 2000);
     }
 }
 
@@ -147,14 +185,13 @@ function setTime(mode) {
         hourHand.style.transition = '';
     }
 
-    const clock = document.querySelector('.clock-face');
-
     if (hours > 6 && hours < 18) {
         clock.style.boxShadow = '0 0 24px 2px darkorange';
     } else {
         clock.style.boxShadow = '0 0 24px 2px whitesmoke';
     }
 }
+
 
 function setDate(mode) {
     const dateTime = new Date();
@@ -200,7 +237,34 @@ function blink(btn) {
     }
 }
 
+function radius(shape) {
+    if (shape === 'circle') {
+        if (clockFace.style.borderRadius === '10px') {
+            clockFace.style.borderRadius = '50%';
+        } else {
+            clockFace.style.borderRadius = '10px';
+        }
+    } else {
+        clockFace.style.borderRadius = '50%';
+    }
+}
 
+function hideClock(clockVisible) {
+    if (clockVisible === 'true') {
+        if (clock.style.visibility === 'visible') {
+            clock.style.visibility = 'hidden';
+            clock.style.transition = 'all .5s';
+        } else if (clock.style.visibility === 'hidden') {
+            clock.style.visibility = 'visible';
+            clock.style.transition = 'all .5s';
+        }
+    } else {
+        clock.style.visibility = 'visible'
+        clock.style.transition = 'all .5s';
+    }
+}
+
+setInterval(typeWrite(), typeWriteTime);
 setInterval(() => setTime(mode), interval);
 setInterval(() => setDate(mode), interval);
 setInterval(() => blink(btn), blinkInterval);
