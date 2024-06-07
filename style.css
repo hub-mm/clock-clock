@@ -164,6 +164,8 @@ opacity: 1;
     justify-content: space-evenly;
     flex: 1;
 
+    transition: '.5s';
+
     /* border: solid white; */
 }
 
@@ -204,7 +206,7 @@ opacity: 1;
 
     visibility: visible;
 
-    transition: all .75s;
+    transition: all .5s;
 }
 
 .hand {
@@ -216,29 +218,27 @@ opacity: 1;
     transform-origin: center;
     transform: rotate(180deg);
     
-    transition: all .3s;
-    transition-timing-function: cubic-bezier(0, 2.31, 1, 0.74);
+    transition: all .5s;
+    transition-timing-function: transform .5s cubic-bezier(0, 2.31, 1, 0.74);
 }
 
 .hour-hand {
     height: 14px;
     width: 315px;
     
-    transition: .5s;
+    transition: all .75s;
 }
 
 .minute-hand {
     height: 8px;
     width: 415px;
     
-    /* transition-timing-function: cubic-bezier(0, 2.31, 1, 0.74); */
-    transition: .5s;
+    transition: all .75s;
 }
 
 .second-hand {
     height: 4px;
     width: 430px;
     
-    /* transition-timing-function: cubic-bezier(0, 2.31, 1, 0.74); */
-    transition: .5s;
+    transition: all .75s;
 }

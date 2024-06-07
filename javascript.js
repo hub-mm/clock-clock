@@ -9,6 +9,7 @@ const plus = document.querySelector('#plus');
 const secondHand = document.querySelector('.second-hand');
 const minuteHand = document.querySelector('.minute-hand');
 const hourHand = document.querySelector('.hour-hand');
+const hand = document.querySelector('.hand');
 const time = document.querySelector('.time');
 const date = document.querySelector('.date');
 
@@ -100,7 +101,6 @@ rangeSlider.addEventListener('input', function changeSliderValue() {
     hourHand.style.width = `${hourHandSize}px`;
     minuteHand.style.width = `${minuteHandSize}px`;
     secondHand.style.width = `${secondHandSize}px`;
-    console.log(`${secondHandSize}px`);
 
     if (value > 84) {
         let hourHandSize = parseInt(340) - (2.5 * parseInt(value));
@@ -182,22 +182,25 @@ function setTime(mode) {
     minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
     secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
 
+    hourHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
+    minuteHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
+
+    if (secondsDegrees === 270) {
+        secondHand.style.transition = 'none';
+        minuteHand.style.transition = 'none';
+        hourHand.style.transition = 'none';
+    } else {
+        secondHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
+        minuteHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
+        hourHand.style.transition = 'transform .5s cubic-bezier(0, 2.31, 1, 0.74)';
+    }
+
     const hoursString = hours < 10 ? `0${hours}` : hours;
     const minutesString = minutes < 10 ? `0${minutes}` : minutes;
     const secondsString = seconds < 10 ? `0${seconds}` : seconds;
 
     const timeFormat = `${hoursString} : ${minutesString} : ${secondsString}`;
     time.textContent = timeFormat;
-
-    if (secondsDegrees === 270 || minutesDegrees === 270 || hoursDegrees === 270) {
-        secondHand.style.transition = 'none';
-        minuteHand.style.transition = 'none';
-        hourHand.style.transition = 'none';
-    } else {
-        secondHand.style.transitionTimingFunction = 'cubic-bezier(0, 2.31, 1, 0.74)';
-        minuteHand.style.transitionTimingFunction = 'cubic-bezier(0, 2.31, 1, 0.74)';
-        hourHand.style.transitionTimingFunction = 'cubic-bezier(0, 2.31, 1, 0.74)';
-    }
 
     if (hours > 6 && hours < 18) {
         clock.style.boxShadow = '0 0 24px 2px darkorange';
@@ -255,11 +258,14 @@ function radius(shape) {
     if (shape === 'circle') {
         if (clockFace.style.borderRadius === '10px') {
             clockFace.style.borderRadius = '50%';
+            clockFace.style.transition = 'all 1s';
         } else {
             clockFace.style.borderRadius = '10px';
+            clockFace.style.transition = 'all 1s'
         }
     } else {
         clockFace.style.borderRadius = '50%';
+        clockFace.style.transition = 'all 1s'
     }
 }
 
@@ -268,13 +274,16 @@ function hideClock(clockVisible) {
         if (clock.style.visibility === 'hidden') {
             clock.style.visibility = 'visible';
             clock.style.transition = 'all .5s';
+            hand.style.transition = 'all 1s'
         } else if (clock.style.visibility === 'visible') {
             clock.style.visibility = 'hidden';
             clock.style.transition = 'all .5s';
+            hand.style.transition = 'all 1s'
         }
     } else {
         clock.style.visibility = 'hidden'
         clock.style.transition = 'all .5s';
+        hand.style.transition = 'all 1s'
     }
 }
 
