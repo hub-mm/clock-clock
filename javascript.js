@@ -102,6 +102,10 @@ rangeSlider.addEventListener('input', function changeSliderValue() {
     minuteHand.style.width = `${minuteHandSize}px`;
     secondHand.style.width = `${secondHandSize}px`;
 
+    hourHand.style.transition = 'all .1s';
+    minuteHand.style.transition = 'all .1s';
+    secondHand.style.transition = 'all .1s';
+
     if (value > 84) {
         let hourHandSize = parseInt(340) - (2.5 * parseInt(value));
         let minuteHandSize = parseInt(460) - (3.4 * parseInt(value));
