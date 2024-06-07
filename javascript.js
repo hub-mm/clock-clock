@@ -1,3 +1,5 @@
+const body = document.querySelector('body');
+
 const timeChangeButton = document.querySelectorAll('.button-time-change button');
 const local = document.querySelector('#local');
 const minus = document.querySelector('#minus');
@@ -12,14 +14,15 @@ const date = document.querySelector('.date');
 
 const blinkSwitch = document.querySelector('#blink');
 const radiusSwitch = document.querySelector('#radius');
-const clockSwitch = document.querySelector('#clock-switch')
+const clockSwitch = document.querySelector('#hide');
+const fontSwitch = document.querySelector('#font');
 
 const rangeSlider = document.querySelector('#range-slider');
 const timeDate = document.querySelector('.time-date');
 
 const clock = document.querySelector('.clock-face');
 
-const title = 'past time . . . . . . . . . . . . . . . . . . ';
+const title = 'past time ... |';
 const typeWriteTime = 500;
 let num = 0;
 
@@ -32,6 +35,7 @@ let btn = 'off';
 let clockFace = document.querySelector('.clock-face');
 let shape = 'circle';
 let clockVisible = 'true';
+let fontStyle = 'tiny5';
 
 
 local.addEventListener('click', () => {
@@ -110,6 +114,16 @@ rangeSlider.addEventListener('input', function changeSliderValue() {
     }
 });
 
+fontSwitch.addEventListener('click', () => {
+    if (fontStyle === 'tiny5') {
+        fontStyle = 'roboto';
+        changeFont(fontStyle);
+    } else {
+        fontStyle = 'tiny5';
+        changeFont(fontStyle);
+    }
+})
+
 
 function typeWrite() {
     if (num < title.length) {
@@ -121,7 +135,7 @@ function typeWrite() {
             document.querySelector('.title').innerHTML = '';
             num = 0;
             typeWrite();
-        }, 2000);
+        }, 100);
     }
 }
 
@@ -180,9 +194,9 @@ function setTime(mode) {
         minuteHand.style.transition = 'none';
         hourHand.style.transition = 'none';
     } else {
-        secondHand.style.transition = '';
-        minuteHand.style.transition = '';
-        hourHand.style.transition = '';
+        secondHand.style.transitionTimingFunction = 'cubic-bezier(0, 2.31, 1, 0.74)';
+        minuteHand.style.transitionTimingFunction = 'cubic-bezier(0, 2.31, 1, 0.74)';
+        hourHand.style.transitionTimingFunction = 'cubic-bezier(0, 2.31, 1, 0.74)';
     }
 
     if (hours > 6 && hours < 18) {
@@ -251,16 +265,24 @@ function radius(shape) {
 
 function hideClock(clockVisible) {
     if (clockVisible === 'true') {
-        if (clock.style.visibility === 'visible') {
-            clock.style.visibility = 'hidden';
-            clock.style.transition = 'all .5s';
-        } else if (clock.style.visibility === 'hidden') {
+        if (clock.style.visibility === 'hidden') {
             clock.style.visibility = 'visible';
+            clock.style.transition = 'all .5s';
+        } else if (clock.style.visibility === 'visible') {
+            clock.style.visibility = 'hidden';
             clock.style.transition = 'all .5s';
         }
     } else {
-        clock.style.visibility = 'visible'
+        clock.style.visibility = 'hidden'
         clock.style.transition = 'all .5s';
+    }
+}
+
+function changeFont(fontStyle) {
+    if (fontStyle === 'tiny5') {
+        body.style.fontFamily = 'Tiny5, sans-serif';
+    } else if (fontStyle === 'roboto') {
+        body.style.fontFamily = 'Roboto, sans-serif';
     }
 }
 
